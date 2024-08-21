@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\CleanArchitecture.Domain\SkillNet.Domain.csproj" />
+    <ProjectReference Include="..\..\src\SkillNet.Domain\SkillNet.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
