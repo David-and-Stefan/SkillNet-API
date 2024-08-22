@@ -32,5 +32,16 @@
             public static readonly DateTime MinBirthDate = new DateTime(1900, 1, 1);
             public static readonly DateTime MaxBirthDate = DateTime.Now.AddYears(-18);
         }
+        public class Member
+        {
+            public const int MinNameLength = 2;
+            public const int MaxNameLength = 50;
+
+            public const int MinBioLength = 0;
+            public const int MaxBioLength = 300;
+
+            public static readonly DateTime MinBirthDate = new DateTime(1900, 1, 1);
+            public static readonly DateTime MaxBirthDate = DateTime.Now.AddYears(-13);
+        }
     }
 }

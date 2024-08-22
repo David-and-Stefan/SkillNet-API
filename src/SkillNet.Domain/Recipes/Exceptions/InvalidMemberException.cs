@@ -4,13 +4,13 @@ using SkillNet.Domain.Common;
 namespace SkillNet.Domain.Recipes.Exceptions
 {
     [ExcludeFromCodeCoverage]
-    public class InvalidMemberException : BaseDomainException
+    public class InvalidOrganizerException : BaseDomainException
     {
-        public InvalidMemberException()
+        public InvalidOrganizerException()
         {
 
         }
-        public InvalidMemberException(string error) : base(error)
+        public InvalidOrganizerException(string error) : base(error)
         {
 
         }

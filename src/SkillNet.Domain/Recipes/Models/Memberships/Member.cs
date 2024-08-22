@@ -1,16 +1,13 @@
-﻿using System.Runtime.CompilerServices;
-using SkillNet.Domain.Common;
-using SkillNet.Domain.Common.Models;
+﻿using SkillNet.Domain.Common.Models;
 using SkillNet.Domain.Recipes.Exceptions;
 
-[assembly: InternalsVisibleTo("SkillNet.Domain.UnitTests")]
 namespace SkillNet.Domain.Recipes.Models.Memberships
 {
-    using static ModelConstants.Organizer;
+    using static ModelConstants.Member;
 
-    internal class Organizer : Entity<int>, IAggregateRoot
+    internal class Member : Entity<int>
     {
-        internal Organizer(string name, string email, string bio, string imageUrl, DateTime birthDate, string phoneNumber, string pronouns)
+        internal Member(string name, string email, string bio, string imageUrl, DateTime birthDate, string phoneNumber, string pronouns)
         {
             this.Validate(name, email, bio, imageUrl, birthDate);
 
@@ -40,37 +37,36 @@ namespace SkillNet.Domain.Recipes.Models.Memberships
             this.ValidateBirthDate(birthDate);
         }
         private void ValidateName(string name) =>
-            Guard.ForStringLength<InvalidOrganizerException>(
+            Guard.ForStringLength<InvalidMemberException>(
                 name,
                 MinNameLength,
                 MaxNameLength,
                 nameof(this.Name));
 
         private void ValidateEmail(string email) =>
-            Guard.ForValidEmail<InvalidOrganizerException>(
+            Guard.ForValidEmail<InvalidMemberException>(
                 email,
                 nameof(this.Name));
 
 
 
         private void ValidateBio(string bio) =>
-            Guard.ForStringLength<InvalidOrganizerException>(
+            Guard.ForStringLength<InvalidMemberException>(
                 bio,
                 MinBioLength,
                 MaxBioLength,
                 nameof(this.Bio));
 
         private void ValidateImageUrl(string imageUrl)
-            => Guard.ForValidUrl<InvalidOrganizerException>(
+            => Guard.ForValidUrl<InvalidMemberException>(
                 imageUrl,
                 nameof(this.ImageUrl));
 
         private void ValidateBirthDate(DateTime birthDate) =>
-            Guard.AgainstOutOfRange<InvalidOrganizerException>(
+            Guard.AgainstOutOfRange<InvalidMemberException>(
                 birthDate,
                 MinBirthDate,
                 MaxBirthDate,
                 nameof(this.BirthDate));
-
     }
 }
