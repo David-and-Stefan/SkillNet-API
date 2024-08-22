@@ -1,4 +1,4 @@
-﻿namespace SkillNet.Domain.Recipes.Models
+﻿namespace SkillNet.Domain.Memberships.Models
 {
     public class ModelConstants
     {
@@ -42,6 +42,16 @@
 
             public static readonly DateTime MinBirthDate = new DateTime(1900, 1, 1);
             public static readonly DateTime MaxBirthDate = DateTime.Now.AddYears(-13);
+        }
+        public class Group
+        {
+            public const int MinNameLength = 2;
+            public const int MaxNameLength = 50;
+
+            public const int MinDescriptionLength = 0;
+            public const int MaxDescriptionLength = 500;
+
+            public const double MinMonthlyFee = 0.0;
         }
     }
 }

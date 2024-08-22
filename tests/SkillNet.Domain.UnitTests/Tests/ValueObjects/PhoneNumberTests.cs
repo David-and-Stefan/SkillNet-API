@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using SkillNet.Domain.Recipes.Exceptions;
-using SkillNet.Domain.Recipes.Models.Memberships;
+using SkillNet.Domain.Memberships.Exceptions;
+using SkillNet.Domain.Memberships.Models.Memberships;
 
 namespace SkillNet.Domain.UnitTests.Tests.ValueObjects
 {

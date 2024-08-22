@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using SkillNet.Domain.Common.Models;
-using SkillNet.Domain.Recipes.Models;
+using SkillNet.Domain.Memberships.Models;
 using SkillNet.Domain.UnitTests.Models.Exceptions;
 
 namespace SkillNet.Domain.UnitTests.Tests.Common

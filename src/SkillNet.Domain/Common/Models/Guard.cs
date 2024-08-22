@@ -1,5 +1,5 @@
 ﻿using System.Reflection.Metadata.Ecma335;
-using SkillNet.Domain.Recipes.Models;
+using SkillNet.Domain.Memberships.Models;
 
 namespace SkillNet.Domain.Common.Models
 {

@@ -1,7 +1,9 @@
 ﻿using SkillNet.Domain.Common.Models;
-using SkillNet.Domain.Recipes.Exceptions;
+using SkillNet.Domain.Memberships.Enums;
+using SkillNet.Domain.Memberships.Exceptions;
+using SkillNet.Domain.Memberships.Models.ValueObjects;
 
-namespace SkillNet.Domain.Recipes.Models.Memberships
+namespace SkillNet.Domain.Memberships.Models.Entities
 {
     using static ModelConstants.Member;
 
@@ -9,15 +11,15 @@ namespace SkillNet.Domain.Recipes.Models.Memberships
     {
         internal Member(string name, string email, string bio, string imageUrl, DateTime birthDate, string phoneNumber, string pronouns)
         {
-            this.Validate(name, email, bio, imageUrl, birthDate);
+            Validate(name, email, bio, imageUrl, birthDate);
 
-            this.Name = name;
-            this.Email = email;
-            this.Bio = bio;
-            this.ImageUrl = imageUrl;
-            this.BirthDate = birthDate;
-            this.PhoneNumber = phoneNumber;
-            this.Pronouns = pronouns;
+            Name = name;
+            Email = email;
+            Bio = bio;
+            ImageUrl = imageUrl;
+            BirthDate = birthDate;
+            PhoneNumber = phoneNumber;
+            Pronouns = pronouns;
         }
 
         public string Name { get; private set; }
@@ -28,25 +30,31 @@ namespace SkillNet.Domain.Recipes.Models.Memberships
         public PhoneNumber PhoneNumber { get; private set; }
         public Pronouns Pronouns { get; private set; }
 
+        public void AcceptInvitation(Invitation invitation)
+        {
+            invitation.Accept(this);
+        }
+
+
         private void Validate(string name, string email, string bio, string imageUrl, DateTime birthDate)
         {
-            this.ValidateName(name);
-            this.ValidateEmail(email);
-            this.ValidateBio(bio);
-            this.ValidateImageUrl(imageUrl);
-            this.ValidateBirthDate(birthDate);
+            ValidateName(name);
+            ValidateEmail(email);
+            ValidateBio(bio);
+            ValidateImageUrl(imageUrl);
+            ValidateBirthDate(birthDate);
         }
         private void ValidateName(string name) =>
             Guard.ForStringLength<InvalidMemberException>(
                 name,
                 MinNameLength,
                 MaxNameLength,
-                nameof(this.Name));
+                nameof(Name));
 
         private void ValidateEmail(string email) =>
             Guard.ForValidEmail<InvalidMemberException>(
                 email,
-                nameof(this.Name));
+                nameof(Name));
 
 
 
@@ -55,18 +63,18 @@ namespace SkillNet.Domain.Recipes.Models.Memberships
                 bio,
                 MinBioLength,
                 MaxBioLength,
-                nameof(this.Bio));
+                nameof(Bio));
 
         private void ValidateImageUrl(string imageUrl)
             => Guard.ForValidUrl<InvalidMemberException>(
                 imageUrl,
-                nameof(this.ImageUrl));
+                nameof(ImageUrl));
 
         private void ValidateBirthDate(DateTime birthDate) =>
             Guard.AgainstOutOfRange<InvalidMemberException>(
                 birthDate,
                 MinBirthDate,
                 MaxBirthDate,
-                nameof(this.BirthDate));
+                nameof(BirthDate));
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using SkillNet.Domain.Common.Models;
-using SkillNet.Domain.Recipes.Exceptions;
+using SkillNet.Domain.Memberships.Exceptions;
 
-namespace SkillNet.Domain.Recipes.Models.Memberships
+namespace SkillNet.Domain.Memberships.Models.ValueObjects
 {
     using static ModelConstants.PhoneNumber;
 
@@ -10,14 +10,14 @@ namespace SkillNet.Domain.Recipes.Models.Memberships
     {
         internal PhoneNumber(string number)
         {
-            this.Validate(number);
+            Validate(number);
 
             if (!Regex.IsMatch(number, PhoneNumberRegularExpression, RegexOptions.None, TimeSpan.FromMilliseconds(500)))
             {
                 throw new InvalidPhoneNumberException("Phone number must start with a '+' and contain only digits afterwards.");
             }
 
-            this.Number = number;
+            Number = number;
         }
 
         public string Number { get; }

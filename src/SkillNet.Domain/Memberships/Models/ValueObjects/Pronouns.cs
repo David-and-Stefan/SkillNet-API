@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using SkillNet.Domain.Common.Models;
-using SkillNet.Domain.Recipes.Exceptions;
+using SkillNet.Domain.Memberships.Exceptions;
 
-namespace SkillNet.Domain.Recipes.Models.Memberships
+namespace SkillNet.Domain.Memberships.Models.ValueObjects
 {
     using static ModelConstants.Pronouns;
 
@@ -10,14 +10,14 @@ namespace SkillNet.Domain.Recipes.Models.Memberships
     {
         internal Pronouns(string pronouns)
         {
-            this.Validate(pronouns);
+            Validate(pronouns);
 
             if (!Regex.IsMatch(pronouns, PronounsRegularExpression, RegexOptions.None, TimeSpan.FromMilliseconds(500)))
             {
                 throw new InvalidPronounsException("Pronouns must be in the format 'text/text', where each 'text' consists only of letters (a-z, A-Z). For example, 'she/her', 'they/them', or 'he/him'.");
             }
 
-            this.Value = pronouns;
+            Value = pronouns;
         }
         public string Value { get; }
 
