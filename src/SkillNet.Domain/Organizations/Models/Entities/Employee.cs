@@ -1,19 +1,17 @@
-﻿using System.Runtime.CompilerServices;
-using SkillNet.Domain.Common;
-using SkillNet.Domain.Common.Models;
-using SkillNet.Domain.Memberships.Exceptions;
-using SkillNet.Domain.Memberships.Models.ValueObjects;
+﻿using SkillNet.Domain.Common.Models;
+using SkillNet.Domain.Organizations.Exceptions;
+using SkillNet.Domain.Organizations.Models.ValueObjects;
 
-[assembly: InternalsVisibleTo("SkillNet.Domain.UnitTests")]
-namespace SkillNet.Domain.Memberships.Models.Entities
+namespace SkillNet.Domain.Organizations.Models.Entities
 {
-    using static ModelConstants.Organizer;
+    using static ModelConstants.Employee;
 
-    internal class Organizer : Entity<int>, IAggregateRoot
+    internal class Employee : Entity<int>
     {
-        public HashSet<Group> groups;
 
-        internal Organizer(string name, string email, string bio, string imageUrl, DateTime birthDate, string phoneNumber, string pronouns)
+        private readonly HashSet<Group> managedGroups;
+
+        internal Employee(string name, string email, string bio, string imageUrl, DateTime birthDate, string phoneNumber, string pronouns)
         {
             Validate(name, email, bio, imageUrl, birthDate);
 
@@ -25,7 +23,7 @@ namespace SkillNet.Domain.Memberships.Models.Entities
             PhoneNumber = phoneNumber;
             Pronouns = pronouns;
 
-            groups = new HashSet<Group>();
+            managedGroups = new HashSet<Group>();
         }
 
         public string Name { get; private set; }
@@ -36,29 +34,41 @@ namespace SkillNet.Domain.Memberships.Models.Entities
         public PhoneNumber PhoneNumber { get; private set; }
         public Pronouns Pronouns { get; private set; }
 
-        public IReadOnlyCollection<Group> Groups => groups.ToList().AsReadOnly();
+        public IReadOnlyCollection<Group> ManagedGroups => managedGroups.ToList().AsReadOnly();
 
-
-        public void CreateGroup(string name, string description, double monthlyFee)
+        public void AcceptInvitation(Invitation invitation)
         {
-            var group = new Group(name, description, monthlyFee, this);
-            if (groups.All(g => g.Name != name))
-            {
-                groups.Add(group);
-            }
+            invitation.Accept(this);
         }
 
-        public void InviteMemberToGroup(int groupId, int memberId)
+        public void ManageGroup(Group group)
         {
-            var group = groups.FirstOrDefault(g => g.Id == groupId);
-            if (group is null)
+            if (managedGroups.Any(g => g.Equals(group)))
             {
-                throw new InvalidOperationException("Group not managed by organizer.");
+                throw new InvalidOperationException("Already managing this group.");
             }
 
-            var invitation = new Invitation(group, memberId);
-            group.AddInvitation(invitation);
+            managedGroups.Add(group);
+        }
 
+        public void ApproveJoinRequest(JoinRequest request)
+        {
+            if (!managedGroups.Contains(request.Group))
+            {
+                throw new InvalidOperationException("This employee does not manage the specified group.");
+            }
+
+            request.Approve();
+        }
+
+        public void RejectJoinRequest(JoinRequest request)
+        {
+            if (!managedGroups.Contains(request.Group))
+            {
+                throw new InvalidOperationException("This employee does not manage the specified group.");
+            }
+
+            request.Reject();
         }
 
         private void Validate(string name, string email, string bio, string imageUrl, DateTime birthDate)
@@ -70,37 +80,36 @@ namespace SkillNet.Domain.Memberships.Models.Entities
             ValidateBirthDate(birthDate);
         }
         private void ValidateName(string name) =>
-            Guard.ForStringLength<InvalidOrganizerException>(
+            Guard.ForStringLength<InvalidEmployeeException>(
                 name,
                 MinNameLength,
                 MaxNameLength,
                 nameof(Name));
 
         private void ValidateEmail(string email) =>
-            Guard.ForValidEmail<InvalidOrganizerException>(
+            Guard.ForValidEmail<InvalidEmployeeException>(
                 email,
                 nameof(Name));
 
 
 
         private void ValidateBio(string bio) =>
-            Guard.ForStringLength<InvalidOrganizerException>(
+            Guard.ForStringLength<InvalidEmployeeException>(
                 bio,
                 MinBioLength,
                 MaxBioLength,
                 nameof(Bio));
 
         private void ValidateImageUrl(string imageUrl)
-            => Guard.ForValidUrl<InvalidOrganizerException>(
+            => Guard.ForValidUrl<InvalidEmployeeException>(
                 imageUrl,
                 nameof(ImageUrl));
 
         private void ValidateBirthDate(DateTime birthDate) =>
-            Guard.AgainstOutOfRange<InvalidOrganizerException>(
+            Guard.AgainstOutOfRange<InvalidEmployeeException>(
                 birthDate,
                 MinBirthDate,
                 MaxBirthDate,
                 nameof(BirthDate));
-
     }
 }

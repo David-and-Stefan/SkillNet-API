@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using SkillNet.Domain.Common.Models;
-using SkillNet.Domain.Memberships.Exceptions;
+using SkillNet.Domain.Organizations.Exceptions;
 
-namespace SkillNet.Domain.Memberships.Models.ValueObjects
+namespace SkillNet.Domain.Organizations.Models.ValueObjects
 {
     using static ModelConstants.Pronouns;
 

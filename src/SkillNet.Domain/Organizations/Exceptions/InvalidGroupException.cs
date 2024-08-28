@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using SkillNet.Domain.Common;
 
-namespace SkillNet.Domain.Memberships.Exceptions
+namespace SkillNet.Domain.Organizations.Exceptions
 {
     [ExcludeFromCodeCoverage]
     public class InvalidGroupException : BaseDomainException

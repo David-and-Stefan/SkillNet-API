@@ -1,15 +1,16 @@
-﻿using SkillNet.Domain.Common.Models;
-using SkillNet.Domain.Memberships.Enums;
-using SkillNet.Domain.Memberships.Exceptions;
-using SkillNet.Domain.Memberships.Models.ValueObjects;
+﻿using System.Runtime.CompilerServices;
+using SkillNet.Domain.Common.Models;
+using SkillNet.Domain.Organizations.Exceptions;
+using SkillNet.Domain.Organizations.Models.ValueObjects;
 
-namespace SkillNet.Domain.Memberships.Models.Entities
+[assembly: InternalsVisibleTo("SkillNet.Domain.UnitTests")]
+namespace SkillNet.Domain.Organizations.Models.Entities
 {
-    using static ModelConstants.Member;
+    using static ModelConstants.Organizer;
 
-    internal class Member : Entity<int>
+    internal class Organizer : Entity<int>
     {
-        internal Member(string name, string email, string bio, string imageUrl, DateTime birthDate, string phoneNumber, string pronouns)
+        internal Organizer(string name, string email, string bio, string imageUrl, DateTime birthDate, string phoneNumber, string pronouns)
         {
             Validate(name, email, bio, imageUrl, birthDate);
 
@@ -20,6 +21,7 @@ namespace SkillNet.Domain.Memberships.Models.Entities
             BirthDate = birthDate;
             PhoneNumber = phoneNumber;
             Pronouns = pronouns;
+
         }
 
         public string Name { get; private set; }
@@ -29,12 +31,7 @@ namespace SkillNet.Domain.Memberships.Models.Entities
         public DateTime BirthDate { get; private set; }
         public PhoneNumber PhoneNumber { get; private set; }
         public Pronouns Pronouns { get; private set; }
-
-        public void AcceptInvitation(Invitation invitation)
-        {
-            invitation.Accept(this);
-        }
-
+        public Organization Organization { get; private set; }
 
         private void Validate(string name, string email, string bio, string imageUrl, DateTime birthDate)
         {
@@ -45,36 +42,36 @@ namespace SkillNet.Domain.Memberships.Models.Entities
             ValidateBirthDate(birthDate);
         }
         private void ValidateName(string name) =>
-            Guard.ForStringLength<InvalidMemberException>(
+            Guard.ForStringLength<InvalidOrganizerException>(
                 name,
                 MinNameLength,
                 MaxNameLength,
                 nameof(Name));
 
         private void ValidateEmail(string email) =>
-            Guard.ForValidEmail<InvalidMemberException>(
+            Guard.ForValidEmail<InvalidOrganizerException>(
                 email,
-                nameof(Name));
-
+                nameof(Email));
 
 
         private void ValidateBio(string bio) =>
-            Guard.ForStringLength<InvalidMemberException>(
+            Guard.ForStringLength<InvalidOrganizerException>(
                 bio,
                 MinBioLength,
                 MaxBioLength,
                 nameof(Bio));
 
         private void ValidateImageUrl(string imageUrl)
-            => Guard.ForValidUrl<InvalidMemberException>(
+            => Guard.ForValidUrl<InvalidOrganizerException>(
                 imageUrl,
                 nameof(ImageUrl));
 
         private void ValidateBirthDate(DateTime birthDate) =>
-            Guard.AgainstOutOfRange<InvalidMemberException>(
+            Guard.AgainstOutOfRange<InvalidOrganizerException>(
                 birthDate,
                 MinBirthDate,
                 MaxBirthDate,
                 nameof(BirthDate));
+
     }
 }

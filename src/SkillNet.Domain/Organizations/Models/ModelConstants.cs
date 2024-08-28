@@ -1,4 +1,4 @@
-﻿namespace SkillNet.Domain.Memberships.Models
+﻿namespace SkillNet.Domain.Organizations.Models
 {
     public class ModelConstants
     {
@@ -32,6 +32,27 @@
             public static readonly DateTime MinBirthDate = new DateTime(1900, 1, 1);
             public static readonly DateTime MaxBirthDate = DateTime.Now.AddYears(-18);
         }
+        public class Employee
+        {
+            public const int MinNameLength = 2;
+            public const int MaxNameLength = 50;
+
+            public const int MinBioLength = 0;
+            public const int MaxBioLength = 300;
+
+            public static readonly DateTime MinBirthDate = new DateTime(1900, 1, 1);
+            public static readonly DateTime MaxBirthDate = DateTime.Now.AddYears(-13);
+        }
+        public class Organization
+        {
+            public const int MinNameLength = 2;
+            public const int MaxNameLength = 50;
+
+            public const int MinDescriptionLength = 0;
+            public const int MaxDescriptionLength = 500;
+
+            public const double MinMonthlyFee = 0.0;
+        }
         public class Member
         {
             public const int MinNameLength = 2;
@@ -49,9 +70,7 @@
             public const int MaxNameLength = 50;
 
             public const int MinDescriptionLength = 0;
-            public const int MaxDescriptionLength = 500;
-
-            public const double MinMonthlyFee = 0.0;
+            public const int MaxDescriptionLength = 300;
         }
     }
 }
