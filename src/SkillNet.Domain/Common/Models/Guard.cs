@@ -1,4 +1,5 @@
-﻿using SkillNet.Domain.Recipes.Models;
+﻿using System.Reflection.Metadata.Ecma335;
+using SkillNet.Domain.Organizations.Models;
 
 namespace SkillNet.Domain.Common.Models
 {
@@ -60,6 +61,31 @@ namespace SkillNet.Domain.Common.Models
 
             ThrowException<TException>($"{name} must be between {min:yyyy-MM-dd} and {max:yyyy-MM-dd}.");
         }
+
+        public static void ForValidEmail<TException>(string email, string name = "Value")
+            where TException : BaseDomainException, new()
+        {
+            if (IsValidEmail(email))
+            {
+                return;
+            }
+
+            ThrowException<TException>($"{name} must be a valid email address.");
+        }
+
+        private static bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
         public static void ForValidUrl<TException>(string url, string name = "Value")
             where TException : BaseDomainException, new()

@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Recipes\Data\" />
-    <Folder Include="Recipes\Enums\" />
+    <Folder Include="Organizations\Data\" />
   </ItemGroup>
 
 </Project>
