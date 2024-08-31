@@ -1,16 +1,16 @@
 ﻿using System.Runtime.CompilerServices;
 using SkillNet.Domain.Common.Models;
 using SkillNet.Domain.Organizations.Exceptions;
-using SkillNet.Domain.Organizations.Models.ValueObjects;
+using SkillNet.Domain.Organizations.Models.Common;
 
 [assembly: InternalsVisibleTo("SkillNet.Domain.UnitTests")]
-namespace SkillNet.Domain.Organizations.Models.Entities
+namespace SkillNet.Domain.Organizations.Models.Organizations
 {
     using static ModelConstants.Organizer;
 
     internal class Organizer : Entity<int>
     {
-        internal Organizer(string name, string email, string bio, string imageUrl, DateTime birthDate, string phoneNumber, string pronouns)
+        internal Organizer(string name, string email, string bio, string imageUrl, DateTime birthDate, string phoneNumber, string pronouns, Organization organization)
         {
             Validate(name, email, bio, imageUrl, birthDate);
 
@@ -21,7 +21,7 @@ namespace SkillNet.Domain.Organizations.Models.Entities
             BirthDate = birthDate;
             PhoneNumber = phoneNumber;
             Pronouns = pronouns;
-
+            Organization = organization;
         }
 
         public string Name { get; private set; }

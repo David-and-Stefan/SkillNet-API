@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using SkillNet.Domain.Organizations.Exceptions;
 using SkillNet.Domain.Organizations.Models;
-using SkillNet.Domain.Organizations.Models.ValueObjects;
+using SkillNet.Domain.Organizations.Models.Common;
 
 namespace SkillNet.Domain.UnitTests.Tests.ValueObjects
 {
