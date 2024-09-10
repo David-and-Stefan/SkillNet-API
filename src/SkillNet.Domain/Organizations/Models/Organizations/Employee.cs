@@ -7,7 +7,7 @@ namespace SkillNet.Domain.Organizations.Models.Organizations
 {
     using static ModelConstants.Employee;
 
-    internal class Employee : Entity<int>
+    public class Employee : Entity<int>
     {
 
         private readonly HashSet<Group> managedGroups;

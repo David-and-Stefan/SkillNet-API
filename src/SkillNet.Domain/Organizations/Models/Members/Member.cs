@@ -7,7 +7,7 @@ using SkillNet.Domain.Organizations.Models.Organizations;
 namespace SkillNet.Domain.Organizations.Models.Members
 {
     using static ModelConstants.Member;
-    internal class Member : Entity<int>, IAggregateRoot
+    public class Member : Entity<int>, IAggregateRoot
     {
         private readonly HashSet<Group> groups;
         private readonly HashSet<JoinRequest> joinRequests;

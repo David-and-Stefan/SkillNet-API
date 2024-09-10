@@ -4,7 +4,7 @@ using SkillNet.Domain.Organizations.Models.Organizations;
 
 namespace SkillNet.Domain.Organizations.Models.Members
 {
-    internal class JoinRequest : Entity<int>
+    public class JoinRequest : Entity<int>
     {
         internal JoinRequest(Member member, int groupId)
         {

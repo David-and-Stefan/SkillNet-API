@@ -6,7 +6,7 @@ using SkillNet.Domain.Organizations.Models.Members;
 namespace SkillNet.Domain.Organizations.Models.Organizations
 {
     using static ModelConstants.Group;
-    internal class Group : Entity<int>
+    public class Group : Entity<int>
     {
         private readonly HashSet<Member> members;
         private readonly HashSet<JoinRequest> joinRequests;

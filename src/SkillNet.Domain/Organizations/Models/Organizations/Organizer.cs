@@ -8,7 +8,7 @@ namespace SkillNet.Domain.Organizations.Models.Organizations
 {
     using static ModelConstants.Organizer;
 
-    internal class Organizer : Entity<int>
+    public class Organizer : Entity<int>
     {
         internal Organizer(string name, string email, string bio, string imageUrl, DateTime birthDate, string phoneNumber, string pronouns, Organization organization)
         {
