@@ -5,5 +5,7 @@ namespace SkillNet.Domain.Organizations.Factories.Organizations
 {
     public interface IOrganizationFactory : IFactory<Organization>
     {
+        IOrganizationFactory WithName(string name);
+        IOrganizationFactory WithDescription(string description);
     }
 }

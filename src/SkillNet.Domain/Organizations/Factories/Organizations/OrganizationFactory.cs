@@ -1,12 +1,40 @@
-﻿using SkillNet.Domain.Organizations.Models.Organizations;
+﻿using SkillNet.Domain.Organizations.Exceptions;
+using SkillNet.Domain.Organizations.Models.Organizations;
 
 namespace SkillNet.Domain.Organizations.Factories.Organizations
 {
     public class OrganizationFactory : IOrganizationFactory
     {
+        private string organizationName = default!;
+        private string organizationDescription = default!;
+
+        private bool nameSet = false;
+        private bool descriptionSet = false;
+
+        public IOrganizationFactory WithName(string name)
+        {
+            this.organizationName = name;
+            this.nameSet = true;
+            return this;
+        }
+
+        public IOrganizationFactory WithDescription(string description)
+        {
+            this.organizationDescription = description;
+            this.descriptionSet = true;
+            return this;
+        }
+
         public Organization Build()
         {
-            throw new NotImplementedException();
+            if (!this.nameSet || !this.descriptionSet)
+            {
+                throw new InvalidOrganizationException("Name and description must have values.");
+            }
+
+            return new Organization(
+                this.organizationName,
+                this.organizationDescription);
         }
     }
 }
