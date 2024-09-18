@@ -1,20 +1,21 @@
 ﻿using SkillNet.Domain.Common.Models;
 using SkillNet.Domain.Organizations.Enums;
+using SkillNet.Domain.Organizations.Models.Organizations;
 
-namespace SkillNet.Domain.Organizations.Models.Entities
+namespace SkillNet.Domain.Organizations.Models.Members
 {
-    internal class JoinRequest : Entity<int>
+    public class JoinRequest : Entity<int>
     {
-        internal JoinRequest(Member member, Group group)
+        internal JoinRequest(Member member, int groupId)
         {
             Member = member;
-            Group = group;
+            GroupId = groupId;
             Status = Status.Pending;
             RequestedOn = DateTime.UtcNow;
         }
 
         public Member Member { get; private set; }
-        public Group Group { get; private set; }
+        public int GroupId { get; private set; }
         public Status Status { get; private set; }
         public DateTime RequestedOn { get; private set; }
 
@@ -26,7 +27,7 @@ namespace SkillNet.Domain.Organizations.Models.Entities
             }
 
             Status = Status.Accepted;
-            Group.AddMember(Member);
+
         }
 
         public void Reject()

@@ -2,7 +2,7 @@
 using SkillNet.Domain.Common.Models;
 using SkillNet.Domain.Organizations.Exceptions;
 
-namespace SkillNet.Domain.Organizations.Models.ValueObjects
+namespace SkillNet.Domain.Organizations.Models.Common
 {
     using static ModelConstants.Pronouns;
 

@@ -27,4 +27,9 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tests\Entities\" />
+    <Folder Include="Tests\ValueObjects\" />
+  </ItemGroup>
+
 </Project>

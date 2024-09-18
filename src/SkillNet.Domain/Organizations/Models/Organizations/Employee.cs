@@ -1,12 +1,13 @@
 ﻿using SkillNet.Domain.Common.Models;
 using SkillNet.Domain.Organizations.Exceptions;
-using SkillNet.Domain.Organizations.Models.ValueObjects;
+using SkillNet.Domain.Organizations.Models.Common;
+using SkillNet.Domain.Organizations.Models.Members;
 
-namespace SkillNet.Domain.Organizations.Models.Entities
+namespace SkillNet.Domain.Organizations.Models.Organizations
 {
     using static ModelConstants.Employee;
 
-    internal class Employee : Entity<int>
+    public class Employee : Entity<int>
     {
 
         private readonly HashSet<Group> managedGroups;
@@ -36,11 +37,6 @@ namespace SkillNet.Domain.Organizations.Models.Entities
 
         public IReadOnlyCollection<Group> ManagedGroups => managedGroups.ToList().AsReadOnly();
 
-        public void AcceptInvitation(Invitation invitation)
-        {
-            invitation.Accept(this);
-        }
-
         public void ManageGroup(Group group)
         {
             if (managedGroups.Any(g => g.Equals(group)))
@@ -53,17 +49,18 @@ namespace SkillNet.Domain.Organizations.Models.Entities
 
         public void ApproveJoinRequest(JoinRequest request)
         {
-            if (!managedGroups.Contains(request.Group))
+            if (managedGroups.All(x => x.Id != request.GroupId))
             {
                 throw new InvalidOperationException("This employee does not manage the specified group.");
             }
-
+            var group = managedGroups.FirstOrDefault(x => x.Id == request.GroupId)!;
+            group.AddMember(request.Member);
             request.Approve();
         }
 
         public void RejectJoinRequest(JoinRequest request)
         {
-            if (!managedGroups.Contains(request.Group))
+            if (managedGroups.All(x => x.Id != request.GroupId))
             {
                 throw new InvalidOperationException("This employee does not manage the specified group.");
             }
