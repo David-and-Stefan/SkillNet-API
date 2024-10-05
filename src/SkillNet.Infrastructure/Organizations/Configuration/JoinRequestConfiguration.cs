@@ -18,12 +18,12 @@
                 .IsRequired();
 
             builder.HasOne(jr => jr.Member)
-                .WithMany("joinRequests")
+                .WithMany(x => x.JoinRequests)
                 .HasForeignKey("MemberId")
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne<Group>()
-                .WithMany("joinRequests")
+                .WithMany(x => x.JoinRequests)
                 .HasForeignKey(jr => jr.GroupId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

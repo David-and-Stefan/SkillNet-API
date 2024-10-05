@@ -33,8 +33,8 @@ namespace SkillNet.Infrastructure.Organizations.Configuration
                 .HasForeignKey("ManagerId")
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany<Member>("members")
-                .WithMany("groups")
+            builder.HasMany(g => g.Members)
+                .WithMany(m => m.Groups)
                 .UsingEntity<Dictionary<string, object>>(
                     "MemberGroups",
                     j => j.HasOne<Member>()
@@ -51,15 +51,15 @@ namespace SkillNet.Infrastructure.Organizations.Configuration
                         j.ToTable("MemberGroups");
                     });
 
-            builder.Navigation("members")
+            builder.Navigation(g => g.Members)
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
 
-            builder.HasMany<JoinRequest>("joinRequests")
+            builder.HasMany(g => g.JoinRequests)
                 .WithOne()
                 .HasForeignKey(jr => jr.GroupId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Navigation("joinRequests")
+            builder.Navigation(g => g.JoinRequests)
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
         }
     }

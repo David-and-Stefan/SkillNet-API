@@ -12,6 +12,8 @@ namespace SkillNet.Domain.Organizations.Models.Organizations
 
         private readonly HashSet<Group> managedGroups;
 
+        private Employee() { } //EFCore
+
         internal Employee(string name, string email, string bio, string imageUrl, DateTime birthDate, string phoneNumber, string pronouns)
         {
             Validate(name, email, bio, imageUrl, birthDate);

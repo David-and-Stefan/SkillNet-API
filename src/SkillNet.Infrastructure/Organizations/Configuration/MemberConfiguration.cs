@@ -23,8 +23,8 @@ namespace SkillNet.Infrastructure.Organizations.Configuration
             builder.Property(m => m.Email)
                 .IsRequired();
 
-            builder.HasMany<Group>("groups")
-                .WithMany("members")
+            builder.HasMany(m => m.Groups)
+                .WithMany(g => g.Members)
                 .UsingEntity<Dictionary<string, object>>(
                     "MemberGroups",
                     j => j.HasOne<Group>()
@@ -41,15 +41,15 @@ namespace SkillNet.Infrastructure.Organizations.Configuration
                         j.ToTable("MemberGroups");
                     });
 
-            builder.Navigation("groups")
+            builder.Navigation(m => m.Groups)
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
 
-            builder.HasMany<JoinRequest>("joinRequests")
+            builder.HasMany(m => m.JoinRequests)
                 .WithOne(jr => jr.Member)
                 .HasForeignKey("MemberId")
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Navigation("joinRequests")
+            builder.Navigation(m => m.JoinRequests)
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
         }
     }

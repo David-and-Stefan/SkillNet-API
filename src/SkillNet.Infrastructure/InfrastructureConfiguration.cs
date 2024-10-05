@@ -9,11 +9,21 @@ using SkillNet.Infrastructure.Identity;
 using SkillNet.Infrastructure.Organizations;
 using System.Text;
 using SkillNet.Infrastructure.Common.Identity;
+using SkillNet.Infrastructure.Common.Events;
 
 namespace SkillNet.Infrastructure
 {
     public static class InfrastructureConfiguration
     {
+        public static IServiceCollection AddInfrastructure(
+            this IServiceCollection services,
+            IConfiguration configuration)
+            => services
+                .AddDatabase(configuration)
+                .AddRepositories()
+                .AddIdentity(configuration)
+                .AddTransient<IEventDispatcher, EventDispatcher>();
+
         private static IServiceCollection AddDatabase(
             this IServiceCollection services,
             IConfiguration configuration)

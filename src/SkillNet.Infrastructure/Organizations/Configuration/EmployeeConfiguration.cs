@@ -1,4 +1,6 @@
-﻿namespace SkillNet.Infrastructure.Organizations.Configuration
+﻿using SkillNet.Domain.Organizations.Models.Common;
+
+namespace SkillNet.Infrastructure.Organizations.Configuration
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -47,6 +49,7 @@
 
                 p.Property(p => p.Value);
             });
+            
 
             builder.HasMany(e => e.ManagedGroups)
                 .WithOne()

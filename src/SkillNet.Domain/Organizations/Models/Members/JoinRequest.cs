@@ -6,6 +6,7 @@ namespace SkillNet.Domain.Organizations.Models.Members
 {
     public class JoinRequest : Entity<int>
     {
+        private JoinRequest() { } // EFCore
         internal JoinRequest(Member member, int groupId)
         {
             Member = member;

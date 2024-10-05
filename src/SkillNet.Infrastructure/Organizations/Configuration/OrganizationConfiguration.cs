@@ -29,13 +29,6 @@
                 .Metadata
                 .PrincipalToDependent?
                 .SetField("employees");
-
-            builder
-                .HasMany(o => o.Groups)
-                .WithOne()
-                .Metadata
-                .PrincipalToDependent?
-                .SetField("groups");
         }
     }
 }
