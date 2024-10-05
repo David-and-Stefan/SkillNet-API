@@ -26,6 +26,7 @@ namespace SkillNet.Domain.Organizations.Models.Organizations
         public string Description { get; private set; }
 
         public IReadOnlyCollection<Employee> Employees => employees.ToList().AsReadOnly();
+        public IReadOnlyCollection<Group> Groups => groups.ToList().AsReadOnly();
         public bool IsEmployee(Employee member) => employees.Any(e => e.Equals(member));
 
         public void CreateGroup(string name, string description, int employeeId)

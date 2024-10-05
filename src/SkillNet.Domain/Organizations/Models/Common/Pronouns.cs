@@ -8,6 +8,7 @@ namespace SkillNet.Domain.Organizations.Models.Common
 
     public class Pronouns : ValueObject
     {
+        private Pronouns () { } //EFCore
         internal Pronouns(string pronouns)
         {
             Validate(pronouns);

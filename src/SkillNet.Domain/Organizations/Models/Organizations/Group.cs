@@ -11,6 +11,8 @@ namespace SkillNet.Domain.Organizations.Models.Organizations
         private readonly HashSet<Member> members;
         private readonly HashSet<JoinRequest> joinRequests;
 
+        private Group() { } //EFCore
+
         internal Group(string name, string description, Organization organization, Employee manager)
         {
             Validate(name, description);
