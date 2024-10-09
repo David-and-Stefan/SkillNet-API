@@ -7,5 +7,6 @@ namespace SkillNet.Domain.Organizations.Factories.Organizations
     {
         IOrganizationFactory WithName(string name);
         IOrganizationFactory WithDescription(string description);
+        IOrganizationFactory WithOwnerId(string ownerId);
     }
 }
