@@ -2,6 +2,7 @@
 {
     public class AuthenticationSettings
     {
-        public string ClientId { get; private set; } = default!;
+        public string Audience { get; private set; } = default!;
+        public string Authority { get; private set; } = default!;
     }
 }

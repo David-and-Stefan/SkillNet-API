@@ -59,10 +59,11 @@ namespace SkillNet.Infrastructure
             .AddJwtBearer(opts =>
             {
 
-                opts.Authority = "https://accounts.google.com";
+                opts.Authority = configuration.GetSection(nameof(AuthenticationSettings))[
+                    nameof(AuthenticationSettings.Authority)]!;
                 opts.Audience =
                     configuration.GetSection(nameof(AuthenticationSettings))[
-                        nameof(AuthenticationSettings.ClientId)]!;
+                        nameof(AuthenticationSettings.Audience)]!;
             });
 
             return services;
