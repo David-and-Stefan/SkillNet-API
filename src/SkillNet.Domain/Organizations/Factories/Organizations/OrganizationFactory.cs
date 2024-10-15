@@ -7,9 +7,11 @@ namespace SkillNet.Domain.Organizations.Factories.Organizations
     {
         private string organizationName = default!;
         private string organizationDescription = default!;
+        private string organizationOwnerId = default!;
 
         private bool nameSet = false;
         private bool descriptionSet = false;
+        private bool ownerSet = false;
 
         public IOrganizationFactory WithName(string name)
         {
@@ -24,17 +26,24 @@ namespace SkillNet.Domain.Organizations.Factories.Organizations
             this.descriptionSet = true;
             return this;
         }
+        public IOrganizationFactory WithOwnerId(string ownerId)
+        {
+            this.organizationOwnerId = ownerId;
+            this.ownerSet = true;
+            return this;
+        }
 
         public Organization Build()
         {
-            if (!this.nameSet || !this.descriptionSet)
+            if (!this.nameSet || !this.descriptionSet || !this.ownerSet)
             {
                 throw new InvalidOrganizationException("Name and description must have values.");
             }
 
             return new Organization(
                 this.organizationName,
-                this.organizationDescription);
+                this.organizationDescription,
+                this.organizationOwnerId);
         }
     }
 }

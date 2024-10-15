@@ -12,18 +12,21 @@ namespace SkillNet.Domain.Organizations.Models.Organizations
         private readonly HashSet<Employee> employees;
         private readonly HashSet<Group> groups;
 
-        internal Organization(string name, string description)
+        internal Organization(string name, string description, string ownerId)
         {
             Validate(name, description);
 
             Name = name;
             Description = description;
+            OwnerId = ownerId;
 
             employees = new HashSet<Employee>();
             groups = new HashSet<Group>();
+            OwnerId = ownerId;
         }
         public string Name { get; private set; }
         public string Description { get; private set; }
+        public string OwnerId { get; private set; }
 
         public IReadOnlyCollection<Employee> Employees => employees.ToList().AsReadOnly();
         public IReadOnlyCollection<Group> Groups => groups.ToList().AsReadOnly();

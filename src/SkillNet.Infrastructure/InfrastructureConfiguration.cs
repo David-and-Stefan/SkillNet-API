@@ -5,10 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using SkillNet.Application.Common;
 using SkillNet.Domain.Common;
 using SkillNet.Infrastructure.Common.Persistence;
-using SkillNet.Infrastructure.Identity;
 using SkillNet.Infrastructure.Organizations;
 using System.Text;
-using SkillNet.Infrastructure.Common.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using SkillNet.Application.Common.Settings;
 using SkillNet.Infrastructure.Common.Events;
 
 namespace SkillNet.Infrastructure
@@ -50,38 +50,23 @@ namespace SkillNet.Infrastructure
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services
-                .AddIdentity<User, IdentityRole>(options =>
-                {
-                    options.Password.RequiredLength = 6;
-                    options.Password.RequireDigit = false;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireUppercase = false;
-                })
-                .AddEntityFrameworkStores<SkillNetDbContext>();
 
-            var secret = configuration
-                .GetSection(nameof(ApplicationSettings))
-                .GetValue<string>(nameof(ApplicationSettings.Secret));
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(opts =>
+            {
 
-            var key = Encoding.ASCII.GetBytes(secret);
-
-            services
-                .AddIdentityServer(options =>
-                {
-                    options.Events.RaiseErrorEvents = true;
-                    options.Events.RaiseInformationEvents = true;
-                    options.Events.RaiseFailureEvents = true;
-                    options.Events.RaiseSuccessEvents = true;
-                })
-                .AddInMemoryIdentityResources(IdentityServerConfiguration.GetResources())
-                .AddInMemoryApiScopes(IdentityServerConfiguration.GetApiScopes())
-                .AddInMemoryClients(IdentityServerConfiguration.GetClients(configuration))
-                .AddAspNetIdentity<User>();
+                opts.Authority = configuration.GetSection(nameof(AuthenticationSettings))[
+                    nameof(AuthenticationSettings.Authority)]!;
+                opts.Audience =
+                    configuration.GetSection(nameof(AuthenticationSettings))[
+                        nameof(AuthenticationSettings.Audience)]!;
+            });
 
             return services;
-
         }
     }
 }

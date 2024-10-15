@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkillNet.Infrastructure.Common.Persistence;
 
@@ -11,9 +12,11 @@ using SkillNet.Infrastructure.Common.Persistence;
 namespace SkillNet.Infrastructure.Migrations
 {
     [DbContext(typeof(SkillNetDbContext))]
-    partial class SkillNetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241009181426_AddOwnerId")]
+    partial class AddOwnerId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
