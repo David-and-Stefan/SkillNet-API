@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using SkillNet.Web.Common.Pagination;
 
 namespace SkillNet.Web
 {
@@ -11,6 +12,7 @@ namespace SkillNet.Web
     using FluentValidation.AspNetCore;
     using Microsoft.OpenApi.Models;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Options;
 
 
     public static class WebConfiguration
@@ -29,6 +31,8 @@ namespace SkillNet.Web
                 {
                     o.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser()
                         .Build()));
+
+                    o.Filters.Add<PaginationHeadersFilter>();
                 })
                 .AddFluentValidation(validation => validation
                     .RegisterValidatorsFromAssemblyContaining<Result>())
